@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "9869ef05-6dfc-4eca-bdfa-36d859732884",
+		"name": "consultacep",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18474641"
+	},
+	"item": [
+		{
+			"name": "validacep",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function cepNumber(){\r",
+							"\r",
+							"    var cepNumber = [\"02077-045\",\"13458-580\",\"03015-017\",\"05892-387\",\"08452-252\",\"04877-265\",\"08320-685\",\"04182-125\",\"02987-265\",\"08240-174\",\"04405-185\",\"88058-115\",\"88020-230\",\"88090-561\",\"88066-405\",\"88058-256\",\"88040-445\",\"88048-418\",\"88066-420\",\"88066-407\",\"52031-216\",\"50920-825\",\"50810-065\",\"52090-168\",\"52160-231\",\"52121-032\",\"50790-140\",\"51310-540\",\"52190-480\",\"50610-631\",\"41321-205\",\"41320-210\",\"41321-240\",\"41321-830\",\"41321-835\"];\r",
+							"\r",
+							"var randomItem = cepNumber[Math.floor(Math.random() * cepNumber.length)];\r",
+							"\r",
+							"    return randomItem;\r",
+							"\r",
+							"\r",
+							"}\r",
+							"var cep = cepNumber();\r",
+							"pm.environment.set (\"setcep\", cep);\r",
+							"console.log(cep)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"check true cep\", function(){\r",
+							"    pm.expect(pm.variables.get(\"setcep\")).to.eql( JSON.parse (responseBody).cep)\r",
+							"});\r",
+							"console.log(JSON.parse(responseBody))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/{{setcep}}/json/",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"{{setcep}}",
+						"json",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
+		}
+	]
+}
